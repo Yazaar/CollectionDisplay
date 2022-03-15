@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="WPF_CollectionDisplay.Views.UserControls.StringsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_CollectionDisplay.Views.UserControls"
+             xmlns:vm="clr-namespace:WPF_CollectionDisplay.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=vm:StringsViewModel}"
+             Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Padding" Value="10,5" />
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="Previous" Command="{Binding PreviousItemCommand}" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontSize" Value="15" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="{Binding CollectionDisplay.Index}" />
+                <TextBlock Text=" (" />
+                <TextBlock Text="{Binding CollectionDisplay.Items.Count}" />
+                <TextBlock Text=" items)" />
+            </StackPanel>
+            <Button Content="Next" Command="{Binding NextItemCommand}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5">
+            <Label Content="Item:" />
+            <TextBox Text="{Binding Item, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="Index:" />
+            <TextBox Text="{Binding Index, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

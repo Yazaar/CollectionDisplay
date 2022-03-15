@@ -1,0 +1,47 @@
+﻿<Window x:Class="WPF_CollectionDisplay.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_CollectionDisplay.Views"
+        xmlns:vm="clr-namespace:WPF_CollectionDisplay.ViewModels"
+        xmlns:uc="clr-namespace:WPF_CollectionDisplay.Views.UserControls"
+        mc:Ignorable="d"
+        Title="MainView" Height="450" Width="800">
+    
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:StringsViewModel}">
+            <uc:StringsView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ImagesViewModel}">
+            <uc:ImagesView />
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="10,5" />
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="strings" Command="{Binding OpenStringsViewCommand}" />
+            <Button Content="images" Command="{Binding OpenImagesViewCommand}" />
+        </StackPanel>
+        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding CurrentUC}" />
+    </Grid>
+</Window>
