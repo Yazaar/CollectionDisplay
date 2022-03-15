@@ -30,7 +30,7 @@ namespace WPF_CollectionDisplay.ViewModels
         {
             NextImageCommand = new ShiftSelectedImageCommand(this, 1);
             PreviousImageCommand = new ShiftSelectedImageCommand(this, -1);
-            Containers = new ImageContainer[0];
+
             Containers = new ImageContainer[]
             {
                 new ImageContainer()

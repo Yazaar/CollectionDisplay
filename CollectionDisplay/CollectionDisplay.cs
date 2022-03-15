@@ -8,11 +8,12 @@ namespace CollectionDisplay
 {
     public class CollectionDisplay<T> : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private ObservableCollection<T> _items = new ObservableCollection<T>();
         private int _index = 0;
+
         private NotifyCollectionChangedEventHandler _collectionChangedHandler;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private bool _valid = false;
         private T _item;
@@ -110,11 +111,6 @@ namespace CollectionDisplay
             }
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
         /// <summary>
         /// New item added to the collection
         /// </summary>
@@ -166,13 +162,41 @@ namespace CollectionDisplay
         }
 
         /// <summary>
+        /// Triggered whenever the collection has been replaced
+        /// </summary>
+        private void OnNewItems()
+        {
+            Index = 0;
+            UpdateCurrent();
+        }
+
+        /// <summary>
+        /// Triggered whenever the selected item has changed
+        /// </summary>
+        private void UpdateCurrent()
+        {
+            Valid = Index >= 0 && Index < Items.Count;
+            if (Valid) Item = Items[Index];
+            else Item = default;
+        }
+
+        /// <summary>
+        /// Triggered whenever a property calls for a changed event
+        /// </summary>
+        /// <param name="name">The name of the property which called for a changed event</param>
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        /// <summary>
         /// The actual method bound to triggered whenever the collection has been changed
         /// </summary>
         /// <param name="sender">The object (collection) which triggered the event</param>
         /// <param name="e">The arguments related to the triggered event</param>
         private void CollectionChangedEvent(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch(e.Action)
+            switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     CollectionItemAdded(e);
@@ -190,25 +214,6 @@ namespace CollectionDisplay
                     CollectionItemsReset(e);
                     break;
             }
-        }
-
-        /// <summary>
-        /// Triggered whenever the collection has been replaced
-        /// </summary>
-        private void OnNewItems()
-        {
-            Index = 0;
-            UpdateCurrent();
-        }
-
-        /// <summary>
-        /// Triggered whenever the selected item has changed
-        /// </summary>
-        private void UpdateCurrent()
-        {
-            Valid = Index >= 0 && Index < Items.Count;
-            if (Valid) Item = Items[Index];
-            else Item = default;
         }
     }
 }
