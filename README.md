@@ -1,2 +1,2 @@
 # CollectionDisplay
- Tracks a collection of items (C# .NET 5)
+Generic class which contains a set of items which can easily be tracked and observed for changes while at the same time support navigation between entities
